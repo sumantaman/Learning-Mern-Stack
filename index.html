@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skillora Admin Panel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar -->
+      <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex flex-col w-64 bg-indigo-800 text-white">
+          <div
+            class="flex items-center justify-center h-16 px-4 border-b border-indigo-700"
+          >
+            <h1 class="text-xl font-bold">Skillora Admin</h1>
+          </div>
+          <div class="flex flex-col flex-grow px-4 py-4 overflow-y-auto">
+            <nav>
+              <div class="space-y-2">
+                <a
+                  href="#dashboard"
+                  class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-indigo-700"
+                >
+                  <i class="fas fa-tachometer-alt mr-3"></i>
+                  Dashboard
+                </a>
+                <a
+                  href="#instructors"
+                  class="flex items-center px-4 py-2 text-sm font-medium rounded-lg hover:bg-indigo-700"
+                >
+                  <i class="fas fa-chalkboard-teacher mr-3"></i>
+                  Instructor Management
+                </a>
+                <a
+                  href="#students"
+                  class="flex items-center px-4 py-2 text-sm font-medium rounded-lg hover:bg-indigo-700"
+                >
+                  <i class="fas fa-user-graduate mr-3"></i>
+                  Student Management
+                </a>
+                <a
+                  href="#courses"
+                  class="flex items-center px-4 py-2 text-sm font-medium rounded-lg hover:bg-indigo-700"
+                >
+                  <i class="fas fa-book mr-3"></i>
+                  Course Management
+                </a>
+                <a
+                  href="#revenue"
+                  class="flex items-center px-4 py-2 text-sm font-medium rounded-lg hover:bg-indigo-700"
+                >
+                  <i class="fas fa-money-bill-wave mr-3"></i>
+                  Revenue & Payments
+                </a>
+                <a
+                  href="#settings"
+                  class="flex items-center px-4 py-2 text-sm font-medium rounded-lg hover:bg-indigo-700"
+                >
+                  <i class="fas fa-cog mr-3"></i>
+                  Settings
+                </a>
+              </div>
+            </nav>
+          </div>
+
+          <div class="p-4 border-t border-indigo-700">
+            <div class="flex items-center">
+              <img
+                class="w-10 h-10 rounded-full"
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                alt="Admin"
+              />
+              <div class="ml-3">
+                <p class="text-sm font-medium">Admin User</p>
+                <p class="text-xs text-indigo-300">admin@skillora.com</p>
+              </div>
+            </div>
+
+            <!-- Switch + Logout -->
+            <div class="mt-3 pt-3 border-t border-gray-700 space-y-2">
+              <a
+                href="#"
+                class="flex items-center text-sm text-gray-300 hover:text-white"
+              >
+                <i class="fas fa-exchange-alt mr-2"></i>
+                Switch Account
+              </a>
+              <a
+                href="#"
+                class="flex items-center text-sm text-gray-300 hover:text-white"
+              >
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="flex flex-col flex-1 overflow-hidden">
+        <!-- Top Navigation -->
+        <header
+          class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200"
+        >
+          <div class="flex items-center">
+            <button class="md:hidden mr-4 text-gray-500 focus:outline-none">
+              <i class="fas fa-bars"></i>
+            </button>
+            <h2 class="text-xl font-semibold text-gray-800" id="page-title">
+              Dashboard
+            </h2>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button
+              id="theme-toggle"
+              class="p-2 text-gray-500 rounded-full hover:bg-gray-100"
+            >
+              <i class="fas fa-moon"></i>
+            </button>
+            <div class="relative">
+              <button
+                class="p-2 text-gray-500 rounded-full hover:bg-gray-100"
+                id="notification-btn"
+              >
+                <i class="fas fa-bell"></i>
+                <span
+                  class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"
+                ></span>
+              </button>
+              <div
+                class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50"
+                id="notification-dropdown"
+              >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >New instructor request</a
+                >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Course approval needed</a
+                >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Payment processed</a
+                >
+              </div>
+            </div>
+            <!--<div class="flex items-center">
+                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Admin">
+                        <span class="ml-2 text-sm font-medium">Admin</span>
+                    </div>-->
+
+            <!-- Wrapper -->
+            <div class="relative inline-block text-left">
+              <!-- Trigger -->
+              <div id="profileTrigger" class="flex items-center cursor-pointer">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  src="https://randomuser.me/api/portraits/women/44.jpg"
+                  alt="Admin"
+                />
+                <span class="ml-2 text-sm font-medium">Admin</span>
+              </div>
+
+              <!-- Dropdown -->
+              <div
+                id="profileDropdown"
+                class="hidden absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-50"
+              >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Profile</a
+                >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >Settings</a
+                >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100"
+                  >Logout</a
+                >
+              </div>
+            </div>
+
+            <!-- Toggle Script -->
+            <script>
+              const trigger = document.getElementById("profileTrigger");
+              const dropdown = document.getElementById("profileDropdown");
+
+              trigger.addEventListener("click", (e) => {
+                e.stopPropagation(); // Prevents bubbling to window
+                dropdown.classList.toggle("hidden");
+              });
+
+              // Close if clicked outside
+              window.addEventListener("click", () => {
+                dropdown.classList.add("hidden");
+              });
+            </script>
+          </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+          <!-- Dashboard Section -->
+          <section id="dashboard-section" class="section-content">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6"
+            >
+              <!-- Stats Cards -->
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                  <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                    <i class="fas fa-user-graduate"></i>
+                  </div>
+                  <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-500">
+                      Total Students
+                    </h3>
+                    <p
+                      class="text-2xl font-semibold text-gray-900"
+                      id="total-students"
+                    >
+                      0
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                  <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                  </div>
+                  <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-500">
+                      Total Instructors
+                    </h3>
+                    <p
+                      class="text-2xl font-semibold text-gray-900"
+                      id="total-instructors"
+                    >
+                      0
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                  <div class="p-3 rounded-full bg-green-100 text-green-600">
+                    <i class="fas fa-book"></i>
+                  </div>
+                  <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-500">
+                      Active Courses
+                    </h3>
+                    <p
+                      class="text-2xl font-semibold text-gray-900"
+                      id="active-courses"
+                    >
+                      0
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                  <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                    <i class="fas fa-money-bill-wave"></i>
+                  </div>
+                  <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-500">Revenue</h3>
+                    <p
+                      class="text-2xl font-semibold text-gray-900"
+                      id="total-revenue"
+                    >
+                      $0
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+              <!-- Charts -->
+              <div class="bg-white rounded-lg shadow p-6 lg:col-span-2">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">
+                  Monthly Revenue
+                </h3>
+                <canvas id="revenue-chart" height="300"></canvas>
+              </div>
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">
+                  Course Categories
+                </h3>
+                <canvas id="category-chart" height="300"></canvas>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <!-- Calendar -->
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Calendar</h3>
+                <div id="calendar" class="calendar">
+                  <!-- Calendar will be generated by JavaScript -->
+                </div>
+              </div>
+              <!-- Recent Activity -->
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">
+                  Recent Activity
+                </h3>
+                <div class="space-y-4">
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <div
+                        class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"
+                      >
+                        <i class="fas fa-user-plus"></i>
+                      </div>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">
+                        New instructor registered
+                      </p>
+                      <p class="text-sm text-gray-500">
+                        John Doe registered as instructor
+                      </p>
+                      <p class="text-xs text-gray-400">2 hours ago</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <div
+                        class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-green-600"
+                      >
+                        <i class="fas fa-book"></i>
+                      </div>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">
+                        New course published
+                      </p>
+                      <p class="text-sm text-gray-500">
+                        "Advanced JavaScript" by Sarah Smith
+                      </p>
+                      <p class="text-xs text-gray-400">5 hours ago</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <div
+                        class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600"
+                      >
+                        <i class="fas fa-money-bill-wave"></i>
+                      </div>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm font-medium text-gray-900">
+                        Payment processed
+                      </p>
+                      <p class="text-sm text-gray-500">
+                        $250 payout to instructor Michael Brown
+                      </p>
+                      <p class="text-xs text-gray-400">1 day ago</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Instructor Management Section -->
+          <section id="instructors-section" class="section-content hidden">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+              <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">
+                  Instructor Management
+                </h3>
+                <button
+                  class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  <i class="fas fa-plus mr-2"></i> Add New Instructor
+                </button>
+              </div>
+              <div class="px-6 py-4">
+                <div class="flex justify-between items-center mb-4">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="Search instructors..."
+                      class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                    <div class="absolute left-3 top-2.5 text-gray-400">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <select
+                      class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option>All Status</option>
+                      <option>Approved</option>
+                      <option>Pending</option>
+                      <option>Rejected</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Name
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Email
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Courses
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Status
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="bg-white divide-y divide-gray-200"
+                      id="instructors-table-body"
+                    >
+                      <!-- Instructors will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+                <div class="flex justify-between items-center mt-4">
+                  <div class="text-sm text-gray-500">
+                    Showing <span id="instructors-start">1</span> to
+                    <span id="instructors-end">10</span> of
+                    <span id="instructors-total">0</span> instructors
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-indigo-600 text-white"
+                    >
+                      1
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      2
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Student Management Section -->
+          <section id="students-section" class="section-content hidden">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+              <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">
+                  Student Management
+                </h3>
+                <button
+                  class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  <i class="fas fa-plus mr-2"></i> Add New Student
+                </button>
+              </div>
+              <div class="px-6 py-4">
+                <div class="flex justify-between items-center mb-4">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="Search students..."
+                      class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                    <div class="absolute left-3 top-2.5 text-gray-400">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <select
+                      class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option>All Status</option>
+                      <option>Active</option>
+                      <option>Suspended</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Name
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Email
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Enrolled Courses
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Status
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="bg-white divide-y divide-gray-200"
+                      id="students-table-body"
+                    >
+                      <!-- Students will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+                <div class="flex justify-between items-center mt-4">
+                  <div class="text-sm text-gray-500">
+                    Showing <span id="students-start">1</span> to
+                    <span id="students-end">10</span> of
+                    <span id="students-total">0</span> students
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-indigo-600 text-white"
+                    >
+                      1
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      2
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Course Management Section -->
+          <section id="courses-section" class="section-content hidden">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+              <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">
+                  Course Management
+                </h3>
+                <button
+                  class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  <i class="fas fa-plus mr-2"></i> Add New Course
+                </button>
+              </div>
+              <div class="px-6 py-4">
+                <div class="flex justify-between items-center mb-4">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="Search courses..."
+                      class="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
+                    <div class="absolute left-3 top-2.5 text-gray-400">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <select
+                      class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option>All Status</option>
+                      <option>Published</option>
+                      <option>Draft</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Title
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Instructor
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Category
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Students
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Status
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="bg-white divide-y divide-gray-200"
+                      id="courses-table-body"
+                    >
+                      <!-- Courses will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+                <div class="flex justify-between items-center mt-4">
+                  <div class="text-sm text-gray-500">
+                    Showing <span id="courses-start">1</span> to
+                    <span id="courses-end">10</span> of
+                    <span id="courses-total">0</span> courses
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-indigo-600 text-white"
+                    >
+                      1
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      2
+                    </button>
+                    <button
+                      class="px-3 py-1 border rounded-lg bg-gray-100 text-gray-700"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Revenue & Payments Section -->
+          <section id="revenue-section" class="section-content hidden">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+              <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">
+                  Revenue & Payments
+                </h3>
+              </div>
+              <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div class="bg-indigo-50 rounded-lg p-6">
+                    <h4 class="text-lg font-medium text-indigo-800 mb-2">
+                      Total Earnings
+                    </h4>
+                    <p class="text-3xl font-bold text-indigo-800">$12,450.00</p>
+                    <p class="text-sm text-indigo-600 mt-2">
+                      <span class="text-green-500">↑ 12%</span> from last month
+                    </p>
+                  </div>
+                  <div class="bg-green-50 rounded-lg p-6">
+                    <h4 class="text-lg font-medium text-green-800 mb-2">
+                      Pending Payouts
+                    </h4>
+                    <p class="text-3xl font-bold text-green-800">$3,250.00</p>
+                    <p class="text-sm text-green-600 mt-2">
+                      To be processed on 15th
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-6">
+                  <h4 class="text-lg font-medium text-gray-900 mb-4">
+                    Earnings by Course
+                  </h4>
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Course
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Instructor
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Students
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Revenue
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Payout
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        class="bg-white divide-y divide-gray-200"
+                        id="earnings-table-body"
+                      >
+                        <!-- Earnings data will be loaded here by JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="text-lg font-medium text-gray-900 mb-4">
+                    Payout History
+                  </h4>
+                  <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Date
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Instructor
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Amount
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Status
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Transaction ID
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        class="bg-white divide-y divide-gray-200"
+                        id="payouts-table-body"
+                      >
+                        <!-- Payouts data will be loaded here by JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Settings Section -->
+          <section id="settings-section" class="section-content hidden">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+              <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Settings</h3>
+              </div>
+              <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <!-- Admin Profile -->
+                  <div class="md:col-span-1">
+                    <div class="bg-gray-50 rounded-lg p-6">
+                      <div class="flex flex-col items-center">
+                        <img
+                          class="w-24 h-24 rounded-full mb-4"
+                          src="https://randomuser.me/api/portraits/women/44.jpg"
+                          alt="Admin"
+                        />
+                        <h4 class="text-lg font-medium text-gray-900">
+                          Admin User
+                        </h4>
+                        <p class="text-sm text-gray-500">admin@skillora.com</p>
+                        <button
+                          class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                          Change Photo
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Profile Form -->
+                  <div class="md:col-span-2">
+                    <form>
+                      <div class="space-y-4">
+                        <div>
+                          <label
+                            for="name"
+                            class="block text-sm font-medium text-gray-700"
+                            >Full Name</label
+                          >
+                          <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="Admin User"
+                            class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                        </div>
+                        <div>
+                          <label
+                            for="email"
+                            class="block text-sm font-medium text-gray-700"
+                            >Email</label
+                          >
+                          <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="admin@skillora.com"
+                            class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                        </div>
+                        <div>
+                          <label
+                            for="password"
+                            class="block text-sm font-medium text-gray-700"
+                            >Password</label
+                          >
+                          <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter new password"
+                            class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                        </div>
+                        <div>
+                          <label
+                            for="confirm-password"
+                            class="block text-sm font-medium text-gray-700"
+                            >Confirm Password</label
+                          >
+                          <input
+                            type="password"
+                            id="confirm-password"
+                            name="confirm-password"
+                            placeholder="Confirm new password"
+                            class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                        </div>
+                        <div class="pt-4">
+                          <button
+                            type="submit"
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          >
+                            Save Changes
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <!-- Theme Settings -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                  <h4 class="text-lg font-medium text-gray-900 mb-4">
+                    Theme Settings
+                  </h4>
+                  <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                      <input
+                        id="light-theme"
+                        name="theme"
+                        type="radio"
+                        checked
+                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <label
+                        for="light-theme"
+                        class="ml-2 block text-sm text-gray-700"
+                        >Light</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <input
+                        id="dark-theme"
+                        name="theme"
+                        type="radio"
+                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <label
+                        for="dark-theme"
+                        class="ml-2 block text-sm text-gray-700"
+                        >Dark</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <input
+                        id="system-theme"
+                        name="theme"
+                        type="radio"
+                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <label
+                        for="system-theme"
+                        class="ml-2 block text-sm text-gray-700"
+                        >System</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

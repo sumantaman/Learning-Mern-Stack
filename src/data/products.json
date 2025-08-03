@@ -1,0 +1,52 @@
+ [
+  {
+    "userId": "1",
+    "title": "Understanding JSON",
+    "body": "JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy for humans to read and write and easy for machines to parse and generate."
+  },
+  {
+    "userId": "2",
+    "title": "How to Work with APIs",
+    "body": "APIs (Application Programming Interfaces) allow different software applications to communicate with each other. They define the methods and data formats that applications can use to request and exchange information."
+  },
+  {
+    "userId": "3",
+    "title": "The Importance of Data Structures",
+    "body": "Data structures are a way of organizing and storing data in a computer so that it can be accessed and modified efficiently. They are essential for designing efficient algorithms and managing large amounts of data."
+  },
+  {
+    "userId": "4",
+    "title": "Introduction to Object-Oriented Programming",
+    "body": "Object-Oriented Programming (OOP) is a programming paradigm based on the concept of objects, which can contain data and code: data in the form of fields (often known as attributes or properties), and code, in the form of procedures (methods)."
+  },
+  {
+    "userId": "5",
+    "title": "Getting Started with React",
+    "body": "React is a JavaScript library for building user interfaces. It allows developers to create large web applications that can change data, without reloading the page."
+  },
+  {
+    "userId": "6",
+    "title": "Understanding Asynchronous JavaScript",
+    "body": "Asynchronous JavaScript is a programming paradigm that allows for non-blocking code execution. It enables developers to write code that can perform multiple tasks at the same time, without waiting for each task to complete before moving on to the next one."
+  },
+  {
+    "userId": "7",
+    "title": "The Basics of SQL",
+    "body": "SQL (Structured Query Language) is a standard programming language for managing and manipulating databases. It is used to perform tasks such as querying data, updating records, and creating and modifying database structures."
+  },
+  {
+    "userId": "8",
+    "title": "Introduction to Cybersecurity",
+    "body": "Cybersecurity refers to the practice of protecting systems, networks, and programs from digital attacks. These attacks are usually aimed at accessing, changing, or destroying sensitive information."
+  },
+  {
+    "userId": "9",
+    "title": "Understanding Machine Learning",
+    "body": "Machine Learning is a subset of artificial intelligence that focuses on the development of algorithms that allow computers to learn and make predictions or decisions based on data."
+  },
+  {
+    "userId": "10",
+    "title": "Getting Started with Cloud Computing",
+    "body": "Cloud computing is the delivery of computing services over the internet. It allows businesses and individuals to access and use technology resources, such as servers, storage, databases, networking, software, and analytics, without having to own and manage them directly."
+  }
+]
