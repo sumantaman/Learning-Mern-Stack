@@ -8,15 +8,23 @@ import userRoute from './routes/userRoute.js'
 import dotenv from 'dotenv';
 import { log } from 'console';
 import databaseConnection from './config/database.js';
+import logger from './middlewares/logger.js';
+import auth from './middlewares/auth.js';
 dotenv.config();
 
 const app = express()
 const port = process.env.PORT;
-app.use(bodyParser.json())
+
 databaseConnection()
 
-// routes
+// middleware
+app.use(bodyParser.json())
+app.use(logger)
 
+// for whole app
+app.use(auth)
+
+// routes
 app.use(productRoute);
 app.use(userRoute);
 app.use(authRoute)

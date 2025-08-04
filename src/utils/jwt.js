@@ -9,7 +9,7 @@ function createJWT(data){
     return token;
 }
 
-async function verifyJWT(authToken){
+const verifyJWT = async (authToken) =>{
   return await new Promise((resolve, reject) => {
         jwt.verify(authToken,config.JWT_SECRET,(error,data)=>{
             if(error) return reject(error);
@@ -20,5 +20,5 @@ async function verifyJWT(authToken){
 
 export default {
     createJWT,
-    verifyJWT,
+    verifyJWT
 };

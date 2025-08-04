@@ -30,7 +30,6 @@ const login = async (req,res)=>{
 
         const token = jwtUtils.createJWT(data)
         const result = await jwtUtils.verifyJWT(token)
-        console.log(token)
         console.log(result)
         
         res.cookie("authToken", token,{
