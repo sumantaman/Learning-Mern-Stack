@@ -21,8 +21,6 @@ databaseConnection()
 app.use(bodyParser.json())
 app.use(logger)
 
-// for whole app
-app.use(auth)
 
 // routes
 app.use(productRoute);

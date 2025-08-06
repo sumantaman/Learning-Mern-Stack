@@ -12,7 +12,7 @@ const getProductById = async (req, res)=>{
 }
 
 const createProduct =  async (req,res)=>{
-   const data = await productService.createProduct(req.body)
+   const data = await productService.createProduct(req.body,req.user._id)
    res.json(data)
 }
 

@@ -27,10 +27,10 @@ const login = async (req,res)=>{
        }
        const data = await authServices.login(input);
     //    generate token
-
         const token = jwtUtils.createJWT(data)
         const result = await jwtUtils.verifyJWT(token)
         console.log(result)
+        console.log(token)
         
         res.cookie("authToken", token,{
             maxAge : 86400*100

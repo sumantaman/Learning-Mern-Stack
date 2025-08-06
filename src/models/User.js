@@ -1,9 +1,16 @@
 import mongoose from "mongoose";
+import { ADMIN, USER, MERCHANT } from "../constants/roles.js";
+ADMIN;
 
 const userSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
+  },
+  roles: {
+    type: [String],
+    default: [USER],
+    enum: [USER, MERCHANT, ADMIN],
   },
   email: {
     type: String,

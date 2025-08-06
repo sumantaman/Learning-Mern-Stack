@@ -1,17 +1,22 @@
-import verifyJWT from '../utils/jwt.js'
+import jwtUtils from "../utils/jwt.js";
 
-const auth =  async (req,res,next) =>{
-const cookie = req.headers.cookie;
-const authToken = cookie.split("=")[1];
-try {
-console.log(authToken)
-await verifyJWT(authToken)
-next();
-} catch (error) {
-    res.status(400).send("Unauthorized token")
-}
+const auth = async (req, res, next) => {
+  const cookie = req.headers.cookie;
+  if (!cookie) return res.status(401).send("User not authenticated.");
 
-}
+  const authToken = cookie.split("=")[1];
 
+  console.log("Raw cookie:", req.headers.cookie);
+  console.log("Extracted token:", authToken);
+
+  try {
+    const data = await jwtUtils.verifyJWT(authToken);
+    req.user = data;
+    next();
+  } catch (error) {
+    console.error("JWT verification error:", error); // helpful log
+    res.status(401).send(error?.message || "Invalid auth token.");
+  }
+};
 
 export default auth;
