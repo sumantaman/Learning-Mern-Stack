@@ -1,4 +1,4 @@
-import fs from "fs";
+import mongoose from "mongoose";
 import Product from "../models/Product.js";
 
 // const rawData  = fs.readFileSync('./src/data/products.json','utf8');
@@ -10,17 +10,44 @@ const getProducts = async (query) => {
 };
 
 const getProductById = async (id) => {
+  if (!id) {
+    throw {
+      status: 404,
+      message: "Product not found",
+    };
+  }
   return await Product.findById(id);
 };
-const createProduct = (data, createdBy) => {
-  Product.create({ ...data, createdBy })
-    .then(() => console.log(data))
+
+const createProduct = (data) => {
+  const createdByObjectId = new mongoose.Types.ObjectId(data.createdBy);
+
+  return Product.create({ ...data, createdBy: createdByObjectId })
+    .then((product) => {
+      return product;
+    })
     .catch((err) => {
-      console.log(err);
+      console.error("Product creation error:", err.message);
+      throw err;
     });
 };
 
-const updateProduct = async (id, data) => {
+const updateProduct = async (id, data, userId) => {
+  const product = await getProductById(id);
+  console.log(
+    "product id :",
+    id,
+    " user id :",
+    userId,
+    "created by :",
+    product.createdBy
+  );
+  if (String(product.createdBy) !== String(userId)) {
+    throw {
+      status: 403,
+      message: "accessed denied",
+    };
+  }
   const updatedProduct = await Product.findByIdAndUpdate(id, data, {
     new: true,
   });

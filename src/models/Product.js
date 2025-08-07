@@ -11,9 +11,8 @@ import mongoose from "mongoose";
     },
     createdBy:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
         required:[true,"created by user id is requiered"]
-
     }
 });
 

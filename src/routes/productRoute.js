@@ -14,7 +14,12 @@ router.post(
   productController.createProduct
 );
 router.get("/product/:id", productController.getProductById);
-router.put("/product/:id", auth, productController.updateProduct);
+router.put(
+  "/product/:id",
+  auth,
+  roleBasedAuth(MERCHANT),
+  productController.updateProduct
+);
 router.delete("/product/:id", auth, productController.deleteProduct);
 
 export default router;
