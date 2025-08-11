@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 
 const login = async (data) => {
   const user = await User.findOne({ email: data.email });
-
   const isPasswordMatch = bcrypt.compareSync(data.password, user.password);
   if (!isPasswordMatch)
     throw { statusCode: 400, message: "Incorrect email or password" };

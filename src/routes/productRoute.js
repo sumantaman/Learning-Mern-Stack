@@ -6,7 +6,7 @@ import roleBasedAuth from "../middlewares/roleBasedAuth.js";
 import { MERCHANT } from "../constants/roles.js";
 const router = express.Router();
 
-router.get("/", productController.getProduct);
+router.get("/products", productController.getProduct);
 router.post(
   "/create-product",
   auth,

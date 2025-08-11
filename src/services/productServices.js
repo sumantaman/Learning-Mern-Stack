@@ -5,7 +5,15 @@ import Product from "../models/Product.js";
 // const product = JSON.parse(rawData)
 
 const getProducts = async (query) => {
-  const products = await Product.find();
+  console.log(query)
+  const {brand,price,name}=query;
+  // const sort = JSON.parse(query.sort || '{}');
+  const filter = {};
+  if(brand) filter.brand = {$in : brand.split(" ,")}
+  if(price) filter.price = {$lte : price}
+  if(name) filter.name = {$regex : name, $options : 'i'} 
+
+  const products = await Product.find(filter);
   return products;
 };
 
