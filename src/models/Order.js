@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
-import { ORDER_STATUS_CONFIRM,ORDER_STATUS_PENDING,ORDER_STATUS_DELIVERED,ORDER_STATUS_SHIPPING } from "../constants/orderStatus.js";
-
+import {
+  ORDER_STATUS_CONFIRM,
+  ORDER_STATUS_PENDING,
+  ORDER_STATUS_DELIVERED,
+  ORDER_STATUS_SHIPPING,
+} from "../constants/orderStatus.js";
 
 const orderSchema = new mongoose.Schema({
   orderNumber: {
@@ -21,20 +25,20 @@ const orderSchema = new mongoose.Schema({
       },
       quantity: {
         type: String,
-        default:1
-      }
+        default: 1,
+      },
     },
   ],
-  status :{
-    type:String,
-    default:ORDER_STATUS_PENDING,
-    enum:[ORDER_STATUS_CONFIRM,ORDER_STATUS_DELIVERED,ORDER_STATUS_SHIPPING]
+  status: {
+    type: String,
+    default: ORDER_STATUS_PENDING,
+    enum: [ORDER_STATUS_CONFIRM, ORDER_STATUS_DELIVERED, ORDER_STATUS_SHIPPING],
   },
-  totalPrice :{
-    type:Number,
-    required:true,
+  totalPrice: {
+    type: Number,
+    required: true,
   },
-  shippingAddress:{
+  shippingAddress: {
     country: {
       type: String,
       default: "Nepall",
@@ -50,10 +54,9 @@ const orderSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-  }
-   
+  },
 });
 
 const model = mongoose.model("Order", orderSchema);
 
-export default model
+export default model;
