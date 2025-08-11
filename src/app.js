@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import productRoute from './routes/productRoute.js'
 import authRoute from './routes/authRoute.js'
 import userRoute from './routes/userRoute.js'
+import orderRoute from './routes/orderRoute.js'
 import dotenv from 'dotenv';
 import { log } from 'console';
 import databaseConnection from './config/database.js';
@@ -26,6 +27,7 @@ app.use(logger)
 app.use(productRoute);
 app.use(userRoute);
 app.use(authRoute)
+app.use('api/orders',orderRoute)
 
 
 app.listen(port,()=>{
