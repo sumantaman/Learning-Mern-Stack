@@ -18,14 +18,13 @@ const getProductById = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const input = req.body;
-console.log("req userr" , req.user)
-    const product = await productService.createProduct({
-      ...input,
-      createdBy: req.user.id, // 👈 attach user id here
-    });
-    
-    res.status(201).json(product);
+    // console.log("req userr", req.user);
+    // const product = await productService.createProduct({
+    //   ...input,
+    //   createdBy: req.user.id, // 👈 attach user id here
+    // });
 
+    res.status(201).json("success");
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
