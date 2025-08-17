@@ -18,7 +18,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage : multer.memoryStorage() });
 databaseConnection();
 connectionCloudinary();
 

@@ -17,14 +17,15 @@ const getProductById = async (req, res) => {
 // In controller:
 const createProduct = async (req, res) => {
   try {
-    const input = req.body;
+   
     // console.log("req userr", req.user);
-    // const product = await productService.createProduct({
-    //   ...input,
-    //   createdBy: req.user.id, // 👈 attach user id here
-    // });
+    const data = await productService.createProduct(
+      req.body,
+      req.files,
+      req.user.id, // 👈 attach user id here
+    );
 
-    res.status(201).json("success");
+    res.status(201).json(data);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

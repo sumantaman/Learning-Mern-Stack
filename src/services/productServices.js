@@ -1,17 +1,19 @@
 import mongoose from "mongoose";
 import Product from "../models/Product.js";
+import uploadFile from "../utils/file.js";
+
 
 // const rawData  = fs.readFileSync('./src/data/products.json','utf8');
 // const product = JSON.parse(rawData)
 
 const getProducts = async (query) => {
-  console.log(query)
-  const {brand,price,name}=query;
+  console.log(query);
+  const { brand, price, name } = query;
   // const sort = JSON.parse(query.sort || '{}');
   const filter = {};
-  if(brand) filter.brand = {$in : brand.split(" ,")}
-  if(price) filter.price = {$lte : price}
-  if(name) filter.name = {$regex : name, $options : 'i'} 
+  if (brand) filter.brand = { $in: brand.split(" ,") };
+  if (price) filter.price = { $lte: price };
+  if (name) filter.name = { $regex: name, $options: "i" };
 
   const products = await Product.find(filter);
   return products;
@@ -27,17 +29,21 @@ const getProductById = async (id) => {
   return await Product.findById(id);
 };
 
-const createProduct = (data) => {
-  const createdByObjectId = new mongoose.Types.ObjectId(data.createdBy);
+const createProduct =async (data, files, createdBy) => {
+  const uploadedFiles = await uploadFile(files)
+  const createProduct = await  Product.create({ ...data, imageUrls:uploadedFiles.map((item)=>{
+item?.url
+  }), createdBy});
+  // return Product.create({ ...data, createdBy})
+    // .then((product) => {
+    //   return product;
+    // })
+    // .catch((err) => {
+    //   console.error("Product creation error:", err.message);
+    //   throw err;
+    // });
 
-  return Product.create({ ...data, createdBy: createdByObjectId })
-    .then((product) => {
-      return product;
-    })
-    .catch((err) => {
-      console.error("Product creation error:", err.message);
-      throw err;
-    });
+    return createProduct
 };
 
 const updateProduct = async (id, data, userId) => {
