@@ -17,12 +17,11 @@ const getProductById = async (req, res) => {
 // In controller:
 const createProduct = async (req, res) => {
   try {
-   
     // console.log("req userr", req.user);
     const data = await productService.createProduct(
       req.body,
       req.files,
-      req.user.id, // 👈 attach user id here
+      req.user.id // 👈 attach user id here
     );
 
     res.status(201).json(data);
@@ -34,7 +33,12 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const id = req.params.id;
   try {
-    const data = await productService.updateProduct(id, req.body, req.user.id);
+    const data = await productService.updateProduct(
+      id,
+      req.body,
+      req.files,
+      req.user.id
+    );
     res.json(data);
   } catch (error) {
     res.status(error.statusCode || 500).send({ message: error.message });

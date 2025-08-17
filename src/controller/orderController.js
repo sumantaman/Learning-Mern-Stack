@@ -5,6 +5,36 @@ const getOrders = async (req, res) => {
   res.json(orders);
 };
 
+const getOrdersByUser = async (req, res) => {
+
+try {
+    const data = await orderServices.getOrdersByUser(req.user._id);
+    res.json(data)
+} catch (error) {
+  console.log(error)
+}
+}
+
+
+const getOrdersById = async (req, res) => {
+  try {
+    const data = await orderServices.getOrdersByUser(req.params.id);
+    res.json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const updateOrder = async (req, res) => {
+  try {
+    const data = await orderServices.updateOrder(req.params.id,req.body);
+    res.json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 const createOrders = async (req, res) => {
   const input = req.body;
   if (!input.orderItem || input.orderItem.length) {
@@ -20,4 +50,4 @@ const deleteOrder = async (req, res) => {
   res.send("delete order successfully");
 };
 
-export default { getOrders, createOrders };
+export default { getOrders, createOrders ,updateOrder, deleteOrder, getOrdersByUser, getOrdersById};

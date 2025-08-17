@@ -29,44 +29,52 @@ const getProductById = async (id) => {
   return await Product.findById(id);
 };
 
-const createProduct =async (data, files, createdBy) => {
-  const uploadedFiles = await uploadFile(files)
-  const createProduct = await  Product.create({ ...data, imageUrls:uploadedFiles.map((item)=>{
-item?.url
-  }), createdBy});
+const createProduct = async (data, files, createdBy) => {
+  const uploadedFiles = await uploadFile(files);
+  const createProduct = await Product.create({
+    ...data,
+    imageUrls: uploadedFiles.map((item) => {
+      item?.url;
+    }),
+    createdBy,
+  });
   // return Product.create({ ...data, createdBy})
-    // .then((product) => {
-    //   return product;
-    // })
-    // .catch((err) => {
-    //   console.error("Product creation error:", err.message);
-    //   throw err;
-    // });
+  // .then((product) => {
+  //   return product;
+  // })
+  // .catch((err) => {
+  //   console.error("Product creation error:", err.message);
+  //   throw err;
+  // });
 
-    return createProduct
+  return createProduct;
 };
 
-const updateProduct = async (id, data, userId) => {
+
+
+const updateProduct = async (id, data, files, userId) => {
   const product = await getProductById(id);
-  console.log(
-    "product id :",
-    id,
-    " user id :",
-    userId,
-    "created by :",
-    product.createdBy
-  );
+  const updateData = data
+
+  if(files.length > 0){
+    const uploadFiles = await uploadFile(files);
+    updateData.imageUrls = uploadFiles.map((item) => item?.url);
+  }
+
+
   if (String(product.createdBy) !== String(userId)) {
     throw {
       status: 403,
       message: "accessed denied",
     };
   }
-  const updatedProduct = await Product.findByIdAndUpdate(id, data, {
+  const updatedProduct = await Product.findByIdAndUpdate(id,updateData, {
     new: true,
   });
   return updatedProduct;
 };
+
+
 
 const deleteProduct = async (id) => {
   const deletedProduct = await Product.findByIdAndDelete(id);
