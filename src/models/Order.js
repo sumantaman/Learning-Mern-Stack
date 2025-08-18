@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {
+import { type } from 'os';
   ORDER_STATUS_CONFIRM,
   ORDER_STATUS_PENDING,
   ORDER_STATUS_DELIVERED,
@@ -55,6 +56,10 @@ const orderSchema = new mongoose.Schema({
   phone: {
     type: String,
   },
+  payment :{
+    type: mongoose.Types.ObjectId,
+    ref:"Payment"
+  }
 });
 
 const model = mongoose.model("Order", orderSchema);
