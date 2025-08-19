@@ -24,6 +24,6 @@ const Payment = new mongoose.Schema({
   transactionId: String,
 });
 
-const model = mongoose.model("Payment",Payment)
+const model = mongoose.model("Payment", Payment);
 
-export default model
+export default model;

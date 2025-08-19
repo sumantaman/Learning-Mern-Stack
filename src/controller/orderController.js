@@ -6,42 +6,55 @@ const getOrders = async (req, res) => {
 };
 
 const getOrdersByUser = async (req, res) => {
-
-try {
+  try {
     const data = await orderServices.getOrdersByUser(req.user._id);
-    res.json(data)
-} catch (error) {
-  console.log(error)
-}
-}
-
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const getOrdersById = async (req, res) => {
   try {
     const data = await orderServices.getOrdersByUser(req.params.id);
-    res.json(data)
+    res.json(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const updateOrder = async (req, res) => {
   try {
-    const data = await orderServices.updateOrder(req.params.id,req.body);
-    res.json(data)
+    const data = await orderServices.updateOrder(req.params.id, req.body);
+    res.json(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-
+};
 
 const createOrders = async (req, res) => {
   const input = req.body;
-  if (!input.orderItem || input.orderItem.length) {
-    return res.status(400).json({ message: "Order item is required" });
+  const id = req.user.id;
+  try {
+    if (!input.orderItem || input.orderItem.length === 0) {
+      return res.status(400).json({ message: "Order item is required" });
+    }
+    const data = await orderServices.createOrder(input,id);
+    res.json(data);
+  } catch (error) {
+    console.log(error.message);
   }
-  const data = await orderServices.createOrder(req.body, req.user);
-  res.json(data);
+};
+
+const orderPayment = async (req, res) => {
+  const id = req.params.id;
+  const input = req.body;
+  try {
+    const data = await orderServices.orderPayment(id, input);
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const deleteOrder = async (req, res) => {
@@ -50,4 +63,12 @@ const deleteOrder = async (req, res) => {
   res.send("delete order successfully");
 };
 
-export default { getOrders, createOrders ,updateOrder, deleteOrder, getOrdersByUser, getOrdersById};
+export default {
+  getOrders,
+  createOrders,
+  updateOrder,
+  deleteOrder,
+  getOrdersByUser,
+  getOrdersById,
+  orderPayment,
+};

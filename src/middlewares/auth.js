@@ -6,12 +6,10 @@ const auth = async (req, res, next) => {
 
   const authToken = cookie.split("=")[1];
 
-  console.log("Raw cookie:", req.headers.cookie);
-  console.log("Extracted token:", authToken);
 
   try {
     const data = await jwtUtils.verifyJWT(authToken);
-    req.user = data;
+    req.user =  data;
     next();
   } catch (error) {
     console.error("JWT verification error:", error); // helpful log

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {
-import { type } from 'os';
+
   ORDER_STATUS_CONFIRM,
   ORDER_STATUS_PENDING,
   ORDER_STATUS_DELIVERED,
@@ -25,16 +25,22 @@ const orderSchema = new mongoose.Schema({
         required: true,
       },
       quantity: {
-        type: String,
+        type: Number,
         default: 1,
       },
     },
   ],
   status: {
-    type: String,
-    default: ORDER_STATUS_PENDING,
-    enum: [ORDER_STATUS_CONFIRM, ORDER_STATUS_DELIVERED, ORDER_STATUS_SHIPPING],
-  },
+  type: String,
+  default: ORDER_STATUS_PENDING,
+  enum: [
+    ORDER_STATUS_PENDING,
+    ORDER_STATUS_CONFIRM,
+    ORDER_STATUS_DELIVERED,
+    ORDER_STATUS_SHIPPING,
+  ],
+},
+
   totalPrice: {
     type: Number,
     required: true,
@@ -42,7 +48,7 @@ const orderSchema = new mongoose.Schema({
   shippingAddress: {
     country: {
       type: String,
-      default: "Nepall",
+      default: "Nepal",
     },
     province: {
       type: String,

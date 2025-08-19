@@ -6,11 +6,12 @@ import { MERCHANT, ADMIN, USER } from "../constants/roles.js";
 
 const router = express.Router();
 
-router.get('/',auth,roleBasedAuth(ADMIN),orderController.getOrders)
+router.get('/getOrder',auth,roleBasedAuth(ADMIN),orderController.getOrders)
 router.get('/:id',auth,roleBasedAuth(ADMIN),orderController.getOrdersById)
 router.put('/:id',auth,roleBasedAuth(ADMIN),orderController.updateOrder)
 router.get('/user',auth,orderController.getOrdersByUser)
-router.post('/create-order',orderController.createOrders)
+router.post('/create-order',auth,orderController.createOrders)
+router.post("/:id/payment",auth,orderController.orderPayment)
 
 
 export default router

@@ -30,7 +30,7 @@ app.use(logger);
 app.use(upload.array("images", 5), productRoute);
 app.use(userRoute);
 app.use(authRoute);
-app.use("api/orders", orderRoute);
+app.use(orderRoute);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
