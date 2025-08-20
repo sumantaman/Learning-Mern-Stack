@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import Order from "../models/Order.js";
+import payment from "../utils/payment.js";
 
 const getOrders = async () => {
   const orders = await Order.find().populate("orderItem.productId");
@@ -7,22 +8,23 @@ const getOrders = async () => {
 };
 
 const getOrdersByUser = async (userId) => {
-  const orders = await Order.find({ user: userId })
-    .populate("orderItem.product")
-    .populate("user", ["name", "email", "phone", "address"]);
+  const orders = await Order.find({ userId: userId })
+    .populate("orderItem.productId")
+    .populate("userId", ["name", "email", "phone", "address"]);
+  return orders;
 };
 
 const getOrdersById = async (id) => {
   const orders = await Order.findById(id)
-    .populate("orderItem.product")
-    .populate("user", ["name", "email", "phone", "address"]);
-
+    .populate("orderItem.productId")
+    .populate("userId", ["name", "email", "phone", "address"]);
   if (!orders) {
     throw {
       status: 404,
       message: "not found",
     };
   }
+  return orders;
 };
 
 const updateOrder = async (id, data) => {
@@ -39,13 +41,24 @@ const createOrder = async (data,userId) => {
 };
 
 
-
+// 68a4baf66ad888719f247f0a
 const deleteOrder = async (id) => {
   return await Order.findByIdAndDelete(id);
 };
 
-const orderPayment =(id,data)=>{
-  return "order payment init"
+const orderPayment = async (id)=>{
+  const order = await getOrdersById(id)
+  return await payment.payKhalti({
+    amount : order.totalPrice,
+    purchaseOrderId : order.id,
+    purchaseOrderName : order.orderNumber,
+    customer : {
+      name: order.userId.name,
+      mail: order.userId.email,
+      phone: order.userId.phone,
+    },
+  })
+  
 }
 
 

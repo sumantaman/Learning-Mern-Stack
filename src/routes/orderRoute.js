@@ -6,8 +6,8 @@ import { MERCHANT, ADMIN, USER } from "../constants/roles.js";
 
 const router = express.Router();
 
-router.get('/getOrder',auth,roleBasedAuth(ADMIN),orderController.getOrders)
-router.get('/:id',auth,roleBasedAuth(ADMIN),orderController.getOrdersById)
+router.get('/getorder',auth,orderController.getOrders)
+router.get('/getorderbyid/:id',auth,orderController.getOrdersById)
 router.put('/:id',auth,roleBasedAuth(ADMIN),orderController.updateOrder)
 router.get('/user',auth,orderController.getOrdersByUser)
 router.post('/create-order',auth,orderController.createOrders)

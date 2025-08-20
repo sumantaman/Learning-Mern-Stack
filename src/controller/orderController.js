@@ -16,7 +16,8 @@ const getOrdersByUser = async (req, res) => {
 
 const getOrdersById = async (req, res) => {
   try {
-    const data = await orderServices.getOrdersByUser(req.params.id);
+    const data = await orderServices.getOrdersById(req.params.id);
+  
     res.json(data);
   } catch (error) {
     console.log(error);
@@ -48,9 +49,9 @@ const createOrders = async (req, res) => {
 
 const orderPayment = async (req, res) => {
   const id = req.params.id;
-  const input = req.body;
   try {
-    const data = await orderServices.orderPayment(id, input);
+    const data = await orderServices.orderPayment(id);
+    console.log(data)
     res.json(data);
   } catch (error) {
     console.log(error);
